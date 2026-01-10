@@ -1,0 +1,24 @@
+Component Usage Analysis Report
+Generated: 01/03/2026 22:15:25
+================================
+
+USED COMPONENTS (1):
+
+Component: theme-provider
+Usage Count: 1
+Used in:
+  - C:\Users\Lenovo\Downloads\hotel-reservation-main\src\app\layout.tsx
+
+
+UNUSED COMPONENTS (46):
+- add-bus-form - add-hotel-documents-form - add-hotel-facilities-form - add-hotel-form - add-hotel-info-form - add-hotel-rooms-form - add-review-form - add-room-form - admin-dashboard - admin-promoter - ai-suggestion-button - booking-card - bus-booking-full - bus-booking-modal - bus-results-client - bus-search-panel - BusCard - FilterSidebar - flight-booking-modal - flight-results-client - footer - header - hero-3d-scene - hero-scene-wrapper - hotel-card - image-grid - login-form - marketing-sections - meet-the-host - owner-dashboard - payment-gateway - plan-your-trip - review-card - review-summary - reviews-section - room-card - search-filters - search-form - search-suggestions - SearchBar - signup-form - similar-properties - suggestion-modal - theme-toggle - user-bookings - verticals-showcase
+
+RECOMMENDATION:
+The following components appear to be unused and can be safely removed:
+  - src/components/add-bus-form.tsx   - src/components/add-hotel-documents-form.tsx   - src/components/add-hotel-facilities-form.tsx   - src/components/add-hotel-form.tsx   - src/components/add-hotel-info-form.tsx   - src/components/add-hotel-rooms-form.tsx   - src/components/add-review-form.tsx   - src/components/add-room-form.tsx   - src/components/admin-dashboard.tsx   - src/components/admin-promoter.tsx   - src/components/ai-suggestion-button.tsx   - src/components/booking-card.tsx   - src/components/bus-booking-full.tsx   - src/components/bus-booking-modal.tsx   - src/components/bus-results-client.tsx   - src/components/bus-search-panel.tsx   - src/components/BusCard.tsx   - src/components/FilterSidebar.tsx   - src/components/flight-booking-modal.tsx   - src/components/flight-results-client.tsx   - src/components/footer.tsx   - src/components/header.tsx   - src/components/hero-3d-scene.tsx   - src/components/hero-scene-wrapper.tsx   - src/components/hotel-card.tsx   - src/components/image-grid.tsx   - src/components/login-form.tsx   - src/components/marketing-sections.tsx   - src/components/meet-the-host.tsx   - src/components/owner-dashboard.tsx   - src/components/payment-gateway.tsx   - src/components/plan-your-trip.tsx   - src/components/review-card.tsx   - src/components/review-summary.tsx   - src/components/reviews-section.tsx   - src/components/room-card.tsx   - src/components/search-filters.tsx   - src/components/search-form.tsx   - src/components/search-suggestions.tsx   - src/components/SearchBar.tsx   - src/components/signup-form.tsx   - src/components/similar-properties.tsx   - src/components/suggestion-modal.tsx   - src/components/theme-toggle.tsx   - src/components/user-bookings.tsx   - src/components/verticals-showcase.tsx
+
+Before removing, verify:
+1. Check if they're used in any dynamic imports
+2. Check if they're exported but used elsewhere
+3. Consider if they're work-in-progress features
+

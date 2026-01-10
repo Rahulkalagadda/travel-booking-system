@@ -1,0 +1,281 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- Oceanic Teal & Coral Theme (Light) --- */
+    /* Hex fallbacks */
+    --primary-hex: #0F766E;
+    /* Deep Teal */
+    --accent-hex: #F43F5E;
+    /* Sunset Coral */
+    --muted-hex: #64748B;
+
+    /* HSL tokens */
+    --primary: 175 77% 26%;
+    /* #0F766E */
+    --accent: 343 87% 60%;
+    /* #F43F5E */
+
+    /* Backgrounds & surfaces */
+    --background: 210 40% 98%;
+    /* Soft Slate-50 background */
+    --section-background: 0 0% 100%;
+    /* White sections for contrast */
+    --card: 0 0% 100%;
+    /* White cards to pop against soft bg */
+    --card-foreground: 215 28% 17%;
+    /* #1E293B (Slate-800) */
+    --card-border: 214 32% 91%;
+    /* #E2E8F0 */
+    --overlay: rgba(15, 118, 110, 0.1);
+    /* Teal tint */
+
+    /* Typography */
+    --foreground: 215 28% 17%;
+    /* #1E293B */
+    --secondary: 215 16% 47%;
+    /* #64748B */
+    --muted: 215 16% 47%;
+
+    /* UI element tokens */
+    --input-background: 210 40% 98%;
+    --input-border: 214 32% 91%;
+    --disabled-button: 214 32% 91%;
+
+    /* Status */
+    --success: 142 71% 45%;
+    /* #22C55E */
+    --warning: 45 93% 47%;
+    /* #F59E0B */
+    --error: 343 87% 60%;
+    /* #F43F5E (Same as accent for consistency) */
+    --info: 199 89% 48%;
+    /* #0EA5E9 */
+
+    /* Shadows & radius */
+    --card-shadow: 0 8px 32px 0 rgba(15, 118, 110, 0.15);
+    /* Glass shadow */
+    --radius: 1.5rem;
+    /* Highly rounded */
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+    --gradient-orange: linear-gradient(135deg, #F43F5E 0%, #FB7185 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+  }
+
+  .dark {
+    /* --- Oceanic Teal & Coral Theme (Dark) --- */
+    --primary-hex: #2DD4BF;
+    --accent-hex: #FB7185;
+
+    --primary: 168 64% 50%;
+    --accent: 344 93% 71%;
+
+    /* Backgrounds & surfaces */
+    --background: 240 33% 4%;
+    /* #06060c Matches Spline 3D Scene */
+    --section-background: 240 33% 4%;
+    --card: 215 28% 13%;
+    /* Keep cards slightly lighter */
+    --card-foreground: 210 40% 98%;
+    --card-border: 215 28% 25%;
+    --overlay: rgba(0, 0, 0, 0.7);
+
+    /* Typography */
+    --foreground: 210 40% 98%;
+    --secondary: 215 20% 65%;
+    --muted: 215 20% 65%;
+
+    /* UI element tokens */
+    --input-background: 215 28% 13%;
+    --input-border: 215 28% 25%;
+    --disabled-button: 215 28% 25%;
+
+    /* Status */
+    --success: 142 71% 45%;
+    --warning: 45 93% 47%;
+    --error: 343 87% 60%;
+    --info: 199 89% 48%;
+
+    /* Shadows & glow */
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    --radius: 1.5rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #115E59 0%, #0F766E 100%);
+    --gradient-orange: linear-gradient(135deg, #BE123C 0%, #E11D48 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    /* smooth theme transition */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(15, 118, 110, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.08), transparent 25%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Glassmorphism Utilities */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: var(--card-shadow);
+  }
+
+  .dark .glass-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: var(--gradient-orange);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Back-compat mapping */
+  .bg-white {
+    background: hsl(var(--card)) !important;
+    color: hsl(var(--card-foreground)) !important;
+  }
+
+  .bg-slate-50,
+  .bg-gray-50,
+  .bg-gray-100 {
+    background: hsl(var(--section-background)) !important;
+    color: inherit !important;
+  }
+}
+
+/* Component styles to unify look across themes */
+@layer components {
+  .card {
+    @apply glass-card;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+
+  /* Hero card: designed to sit on strong hero gradients (like flights) */
+  .card-hero {
+    @apply glass-card;
+    border-radius: calc(var(--radius) + 0.5rem);
+    padding: 1.5rem;
+  }
+
+  /* Theme-aware hero background utility */
+  .hero-gradient {
+    background: var(--gradient-orange);
+    color: #fff;
+  }
+
+  /* dark-mode variant: slightly translucent so it's not blinding */
+  .dark .card-hero {
+    background: rgba(255, 255, 255, 0.04);
+    color: hsl(var(--foreground));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.6);
+  }
+
+  .section-bg {
+    background: transparent;
+    /* Let global gradient show through */
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center font-medium rounded-full px-6 py-3 transition-all;
+    background: var(--gradient-primary);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(15, 118, 110, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 118, 110, 0.6);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center font-medium rounded-full px-5 py-3 border transition-all;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    color: var(--primary-hex);
+    border-color: var(--primary-hex);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(15, 118, 110, 0.1);
+  }
+
+  /* Footer style responsive to theme */
+  footer,
+  .footer {
+    @apply glass;
+    border-top: 1px solid hsl(var(--card-border));
+    padding: 3rem 1.5rem;
+    margin-top: 4rem;
+  }
+
+  footer .footer-heading,
+  .footer .footer-heading {
+    color: hsl(var(--foreground));
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  /* Small helpers for badges/price highlights */
+  .badge-accent {
+    background: var(--gradient-orange);
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(244, 63, 94, 0.3);
+  }
+}
