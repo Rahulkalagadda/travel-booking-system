@@ -38,7 +38,7 @@ export type Flight = {
 
 export type TrainSeat = {
   id: string;
-  class: string; // '1A', '2A', '3A', 'SL', etc.
+  classType: string; // '1A', '2A', '3A', 'SL', etc.
   price: number;
   available: number;
   status: 'available' | 'limited' | 'waitlist';

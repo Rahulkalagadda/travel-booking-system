@@ -102,10 +102,13 @@ export async function searchTrains(params: TrainSearchParams) {
  */
 async function searchStation(query: string): Promise<{ code: string; name: string } | null> {
     try {
-        const url = new URL(`${RAILWAY_API_CONFIG.baseUrl}/api/v1/searchStation`);
-        url.searchParams.append('query', query);
+        console.log(`Searching for station: "${query}"`);
+        
+        // Try searching with the query as-is first
+        let url = new URL(`${RAILWAY_API_CONFIG.baseUrl}/api/v1/searchStation`);
+        url.searchParams.append('query', query.toUpperCase());
 
-        const response = await fetch(url.toString(), {
+        let response = await fetch(url.toString(), {
             method: 'GET',
             headers: {
                 'x-rapidapi-key': RAILWAY_API_CONFIG.apiKey,
@@ -115,19 +118,52 @@ async function searchStation(query: string): Promise<{ code: string; name: strin
         });
 
         if (!response.ok) {
+            console.error(`Station search failed: ${response.status}`);
             return null;
         }
 
-        const data = await response.json();
+        let data = await response.json();
+        console.log(`Station search for "${query}" returned ${data.data?.length || 0} results`);
 
-        // Return the first matching station
         if (data.data && data.data.length > 0) {
+            // Find the best matching station
+            const stations = data.data;
+            const queryLower = query.toLowerCase();
+            
+            // Priority 1: Exact name match
+            let match = stations.find((s: any) => 
+                s.name.toLowerCase() === queryLower || 
+                s.eng_name?.toLowerCase() === queryLower
+            );
+            
+            // Priority 2: Starts with query
+            if (!match) {
+                match = stations.find((s: any) => 
+                    s.name.toLowerCase().startsWith(queryLower)
+                );
+            }
+            
+            // Priority 3: Contains query and is a major station (shorter code = major station)
+            if (!match) {
+                match = stations
+                    .filter((s: any) => s.name.toLowerCase().includes(queryLower))
+                    .sort((a: any, b: any) => a.code.length - b.code.length)[0];
+            }
+            
+            // Priority 4: Just take the first result
+            if (!match) {
+                match = stations[0];
+            }
+            
+            console.log(`Selected station: ${match.name} (${match.code})`);
+            
             return {
-                code: data.data[0].code,
-                name: data.data[0].name,
+                code: match.code,
+                name: match.name,
             };
         }
 
+        console.log(`No stations found for query: "${query}"`);
         return null;
     } catch (error) {
         console.error('Error searching station:', error);

@@ -506,29 +506,187 @@ export const getAllTrains = async (): Promise<Train[]> => {
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Train[];
 };
 
+// Mock train data for fallback
+const mockTrains: Train[] = [
+    {
+        id: "12301",
+        trainNumber: "12301",
+        trainName: "Rajdhani Express",
+        depart: "New Delhi",
+        arrive: "Mumbai Central",
+        departTime: "16:55",
+        arriveTime: "08:35",
+        duration: "15h 40m",
+        runningDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        seats: [
+            { id: "1A", classType: "1A", price: 3500, available: 12, status: "available" },
+            { id: "2A", classType: "2A", price: 2200, available: 8, status: "available" },
+            { id: "3A", classType: "3A", price: 1600, available: 5, status: "limited" },
+            { id: "SL", classType: "SL", price: 600, available: 0, status: "waitlist" },
+        ],
+        amenities: ["WiFi", "Pantry", "Security", "Charging Points"]
+    },
+    {
+        id: "12430",
+        trainNumber: "12430",
+        trainName: "Shatabdi Express",
+        depart: "New Delhi",
+        arrive: "Lucknow",
+        departTime: "06:10",
+        arriveTime: "12:25",
+        duration: "6h 15m",
+        runningDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        seats: [
+            { id: "CC", classType: "CC", price: 850, available: 25, status: "available" },
+            { id: "EC", classType: "EC", price: 1650, available: 10, status: "available" },
+        ],
+        amenities: ["WiFi", "Pantry", "AC", "Charging Points"]
+    },
+    {
+        id: "12626",
+        trainNumber: "12626",
+        trainName: "Karnataka Express",
+        depart: "New Delhi",
+        arrive: "Bangalore",
+        departTime: "19:50",
+        arriveTime: "06:00",
+        duration: "34h 10m",
+        runningDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        seats: [
+            { id: "1A", classType: "1A", price: 4200, available: 6, status: "limited" },
+            { id: "2A", classType: "2A", price: 2800, available: 15, status: "available" },
+            { id: "3A", classType: "3A", price: 2000, available: 20, status: "available" },
+            { id: "SL", classType: "SL", price: 750, available: 45, status: "available" },
+        ],
+        amenities: ["Pantry", "Security", "Charging Points"]
+    },
+    {
+        id: "12860",
+        trainNumber: "12860",
+        trainName: "Gitanjali Express",
+        depart: "Mumbai CST",
+        arrive: "Howrah",
+        departTime: "06:20",
+        arriveTime: "10:05",
+        duration: "27h 45m",
+        runningDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        seats: [
+            { id: "2A", classType: "2A", price: 2600, available: 12, status: "available" },
+            { id: "3A", classType: "3A", price: 1850, available: 18, status: "available" },
+            { id: "SL", classType: "SL", price: 680, available: 30, status: "available" },
+        ],
+        amenities: ["Pantry", "Security"]
+    },
+    {
+        id: "12951",
+        trainNumber: "12951",
+        trainName: "Mumbai Rajdhani",
+        depart: "Mumbai Central",
+        arrive: "New Delhi",
+        departTime: "16:25",
+        arriveTime: "08:35",
+        duration: "16h 10m",
+        runningDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        seats: [
+            { id: "1A", classType: "1A", price: 3600, available: 10, status: "available" },
+            { id: "2A", classType: "2A", price: 2300, available: 16, status: "available" },
+            { id: "3A", classType: "3A", price: 1650, available: 24, status: "available" },
+        ],
+        amenities: ["WiFi", "Pantry", "Security", "Charging Points"]
+    },
+    {
+        id: "12723",
+        trainNumber: "12723",
+        trainName: "Telangana Express",
+        depart: "Hyderabad",
+        arrive: "New Delhi",
+        departTime: "17:15",
+        arriveTime: "12:05",
+        duration: "24h 50m",
+        runningDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        seats: [
+            { id: "2A", classType: "2A", price: 2350, available: 13, status: "available" },
+            { id: "3A", classType: "3A", price: 1680, available: 21, status: "available" },
+            { id: "SL", classType: "SL", price: 620, available: 40, status: "available" },
+        ],
+        amenities: ["Pantry", "Security"]
+    },
+];
+
 export const getFilteredTrains = async (from: string, to: string, date?: string): Promise<Train[]> => {
-    const snapshot = await getDocs(query(trainsCol));
-    return snapshot.docs
-        .map(doc => ({ id: doc.id, ...doc.data() }))
-        .filter(train => {
-            const t = train as Train;
-            return t.depart.toLowerCase().includes(from.toLowerCase()) &&
-                t.arrive.toLowerCase().includes(to.toLowerCase());
-            // Optionally filter by date/running days if needed
-        }) as Train[];
+    try {
+        // Try Firestore first
+        console.log(`🔍 Querying Firestore for trains: ${from} → ${to}`);
+        const snapshot = await getDocs(query(trainsCol));
+
+        if (snapshot.size > 0) {
+            const firestoreTrains = snapshot.docs
+                .map(doc => ({ id: doc.id, ...doc.data() }))
+                .filter(train => {
+                    const t = train as Train;
+                    return t.depart.toLowerCase().includes(from.toLowerCase()) &&
+                        t.arrive.toLowerCase().includes(to.toLowerCase());
+                }) as Train[];
+
+            if (firestoreTrains.length > 0) {
+                console.log(`✅ Found ${firestoreTrains.length} trains from Firestore`);
+                return firestoreTrains;
+            }
+        }
+
+        // Fall back to mock data
+        console.log(`📦 No Firestore data, using mock trains: ${from} → ${to}`);
+        const filtered = mockTrains.filter(train => {
+            const matchesFrom = train.depart.toLowerCase().includes(from.toLowerCase());
+            const matchesTo = train.arrive.toLowerCase().includes(to.toLowerCase());
+            return matchesFrom && matchesTo;
+        });
+
+        console.log(`✅ Found ${filtered.length} matching mock trains`);
+        return filtered;
+    } catch (error) {
+        console.error('⚠️ Error querying Firestore, falling back to mock data:', error);
+        // Fall back to mock data on error
+        const filtered = mockTrains.filter(train => {
+            const matchesFrom = train.depart.toLowerCase().includes(from.toLowerCase());
+            const matchesTo = train.arrive.toLowerCase().includes(to.toLowerCase());
+            return matchesFrom && matchesTo;
+        });
+        return filtered;
+    }
 };
 
 export const getTrainById = async (id: string): Promise<Train | undefined> => {
     if (!id) return undefined;
-    const trainDoc = await getDoc(doc(trainsCol, id));
-    return trainDoc.exists() ? { id: trainDoc.id, ...trainDoc.data() } as Train : undefined;
+
+    try {
+        // Try Firestore first
+        const trainDoc = await getDoc(doc(trainsCol, id));
+        if (trainDoc.exists()) {
+            return { id: trainDoc.id, ...trainDoc.data() } as Train;
+        }
+
+        // Fall back to mock data
+        console.log(`🔍 Train ${id} not in Firestore, checking mock data...`);
+        const mockTrain = mockTrains.find(t => t.id === id);
+        if (mockTrain) {
+            console.log(`✅ Found train ${id} in mock data`);
+            return mockTrain;
+        }
+
+        console.log(`❌ Train ${id} not found`);
+        return undefined;
+    } catch (error) {
+        console.error('⚠️ Error fetching train, falling back to mock data:', error);
+        return mockTrains.find(t => t.id === id);
+    }
 };
 
 export const createTrain = async (trainData: any) => {
     try {
         const docRef = await addDoc(collection(db, 'trains'), {
             ...trainData,
-            createdAt: serverTimestamp(),
+            createdAt: new Date().toISOString(),
         });
         return docRef.id;
     } catch (error) {

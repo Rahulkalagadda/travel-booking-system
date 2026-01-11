@@ -3,6 +3,7 @@ import { createTrain } from '@/lib/data';
 // Sample train data for seeding
 const sampleTrains = [
     {
+        id: "12301",
         trainNumber: "12301",
         trainName: "Rajdhani Express",
         depart: "New Delhi",
@@ -20,6 +21,7 @@ const sampleTrains = [
         amenities: ["WiFi", "Pantry", "Security", "Charging Points"]
     },
     {
+        id: "12430",
         trainNumber: "12430",
         trainName: "Shatabdi Express",
         depart: "New Delhi",
@@ -35,6 +37,7 @@ const sampleTrains = [
         amenities: ["WiFi", "Pantry", "AC", "Charging Points"]
     },
     {
+        id: "12626",
         trainNumber: "12626",
         trainName: "Karnataka Express",
         depart: "New Delhi",
@@ -52,6 +55,7 @@ const sampleTrains = [
         amenities: ["Pantry", "Security", "Charging Points"]
     },
     {
+        id: "12860",
         trainNumber: "12860",
         trainName: "Gitanjali Express",
         depart: "Mumbai CST",
@@ -68,6 +72,7 @@ const sampleTrains = [
         amenities: ["Pantry", "Security"]
     },
     {
+        id: "12434",
         trainNumber: "12434",
         trainName: "Chennai Rajdhani",
         depart: "Chennai Central",
@@ -84,6 +89,7 @@ const sampleTrains = [
         amenities: ["WiFi", "Pantry", "Security", "Charging Points"]
     },
     {
+        id: "12002",
         trainNumber: "12002",
         trainName: "Bhopal Shatabdi",
         depart: "New Delhi",
@@ -99,6 +105,7 @@ const sampleTrains = [
         amenities: ["WiFi", "Pantry", "AC", "Charging Points"]
     },
     {
+        id: "12951",
         trainNumber: "12951",
         trainName: "Mumbai Rajdhani",
         depart: "Mumbai Central",
@@ -115,6 +122,7 @@ const sampleTrains = [
         amenities: ["WiFi", "Pantry", "Security", "Charging Points"]
     },
     {
+        id: "12259",
         trainNumber: "12259",
         trainName: "Duronto Express",
         depart: "Sealdah",
@@ -132,6 +140,7 @@ const sampleTrains = [
         amenities: ["Pantry", "Security", "Charging Points"]
     },
     {
+        id: "12723",
         trainNumber: "12723",
         trainName: "Telangana Express",
         depart: "Hyderabad",
@@ -148,6 +157,7 @@ const sampleTrains = [
         amenities: ["Pantry", "Security"]
     },
     {
+        id: "12617",
         trainNumber: "12617",
         trainName: "Mangala Lakshadweep Express",
         depart: "Ernakulam",

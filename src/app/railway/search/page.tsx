@@ -173,8 +173,8 @@ export default function RailwaySearchPage() {
                                                     {train.seats?.slice(0, 3).map((seat, idx) => (
                                                         <div key={idx} className="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-900">
                                                             <div className="flex items-center gap-2">
-                                                                <Badge className={getClassBadgeColor(seat.class)}>
-                                                                    {seat.class}
+                                                                <Badge className={getClassBadgeColor(seat.classType)}>
+                                                                    {seat.classType}
                                                                 </Badge>
                                                                 <span className={`text-sm font-semibold ${getStatusColor(seat.status)}`}>
                                                                     {seat.status === 'available' ? `${seat.available} Available` :
@@ -208,8 +208,8 @@ export default function RailwaySearchPage() {
                                                 {train.seats?.map((seat, idx) => (
                                                     <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-white dark:bg-slate-900 border">
                                                         <div className="flex items-center gap-3">
-                                                            <Badge className={getClassBadgeColor(seat.class)}>
-                                                                {seat.class}
+                                                            <Badge className={getClassBadgeColor(seat.classType)}>
+                                                                {seat.classType}
                                                             </Badge>
                                                             <div>
                                                                 <p className="font-semibold">₹{seat.price}</p>
@@ -223,6 +223,10 @@ export default function RailwaySearchPage() {
                                                             size="sm"
                                                             disabled={seat.status === 'waitlist'}
                                                             className="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700"
+                                                            onClick={() => {
+                                                                const bookingUrl = `/railway/book?trainId=${train.id}&class=${seat.classType}&date=${date}`;
+                                                                window.location.href = bookingUrl;
+                                                            }}
                                                         >
                                                             Book Now
                                                         </Button>
